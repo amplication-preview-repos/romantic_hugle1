@@ -1,0 +1,82 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DB_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Vulnerability {
+  id          String                     @id @default(cuid())
+  createdAt   DateTime                   @default(now())
+  updatedAt   DateTime                   @updatedAt
+  name        String?
+  description String?
+  severity    EnumVulnerabilitySeverity?
+}
+
+model WebsiteScan {
+  id        String    @id @default(cuid())
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  url       String?
+  scanDate  DateTime?
+}
+
+model OpenPort {
+  id         String   @id @default(cuid())
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  portNumber Int?
+  protocol   String?
+}
+
+model IpAddress {
+  id        String                  @id @default(cuid())
+  createdAt DateTime                @default(now())
+  updatedAt DateTime                @updatedAt
+  typeField EnumIpAddressTypeField?
+  address   String?
+}
+
+model WebsiteHistory {
+  id         String    @id @default(cuid())
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+  changeDate DateTime?
+  change     String?
+}
+
+model PreviousAttackHistory {
+  id          String    @id @default(cuid())
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  attackType  String?
+  description String?
+  date        DateTime?
+}
+
+model FirewallInfo {
+  id           String   @id @default(cuid())
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  firewallName String?
+  details      String?
+}
+
+model PredictedAttack {
+  id         String   @id @default(cuid())
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  likelihood Float?
+  attackType String?
+}
+
+enum EnumVulnerabilitySeverity {
+  Option1
+}
+
+enum EnumIpAddressTypeField {
+  Option1
+}
